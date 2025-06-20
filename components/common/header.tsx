@@ -1,7 +1,7 @@
 'use client';
 
 import { FileText } from 'lucide-react';
-import { NavLink } from '@/components/ui/common/nav-link';
+import { NavLink } from '@/components/common/nav-link';
 import { useState } from 'react';
 import {Button} from '@/components/ui/button';
 
