@@ -28,7 +28,7 @@ export default function HeroSection() {
       <div className="Button">
         <Link
           href="/pricing"
-          className="text-white mt-6 text-base sm:text-lg lg:text-xl rounded-full px-8 sm:px-10 lg:px-12 py-4 sm:py-7 lg:py-8
+          className="text-white mt-6 text-base sm:text-lg lg:text-xl rounded-full px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6
           lg:mt-16 bg-linear-to-r from-slate-900 to-rose-500
           hover:from-rose-500 hover:to-slate-900 hover:no-underline
           font-bold shadow-lg  transition-all duration-500 flex gap-2 items-center"
