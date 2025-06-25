@@ -164,7 +164,7 @@
     }
   }
 
-  .animate-gradient-x {
+.animate-gradient-x {
     animation: gradient-x 3s ease infinite;
   }
 }

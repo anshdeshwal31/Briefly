@@ -27,8 +27,8 @@ const Header = () => {
 
         <div className="flex justify-end items-center ">
             <SignedIn>
-                <div>
-                    <NavLink href="/upload">Upload a PDF</NavLink>
+                <div className='flex gap-4 pt-2 items-center'>
+                    <NavLink href="/upload" className=''>Upload a PDF</NavLink>
                     <div className="">Pro</div>
                     <UserButton/>
                 </div> 

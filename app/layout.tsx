@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/common/header";
 import { Footer } from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 const fontSans = FontSans({
   variable: "--font-sans",
@@ -34,6 +35,12 @@ export default function RootLayout({
             </main>
             <Footer/>
           </div>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              className:"bg-red-500 rounded-full py-4"      
+            }}
+            />
         </body>
       </html>
     </ClerkProvider>
