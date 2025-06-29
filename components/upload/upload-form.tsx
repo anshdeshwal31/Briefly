@@ -4,8 +4,11 @@ import UploadFormInput from '@/components/upload/upload-form-input';
 import { useUploadThing } from '@/utils/uploadthing'; // Assuming this path is correct
 import { z } from 'zod';
 import {toast} from "sonner"
-import { generatePdfSummary } from '@/actions/upload-actions'; // Assuming this path is correct
+import { generatePdfSummary, storePdfSummaryAction } from '@/actions/upload-actions'; // Assuming this path is correct
 import { useRef, useState } from 'react';
+import { getDbConnection } from '@/lib/db';
+import { Router } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   file: z
@@ -15,7 +18,8 @@ const schema = z.object({
 });
 
 export default function UploadForm() {
-
+  console.log("inside the upload form component ")
+  const router = useRouter()
   const formRef = useRef<HTMLFormElement>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { startUpload} = useUploadThing('pdfUploader', {
@@ -35,17 +39,17 @@ export default function UploadForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    console.log("inside the handle sumbit handler")
     try {
       setIsLoading(true);
       console.log('submitted');
       const formData = new FormData(e.currentTarget);
       const file = formData.get('file') as File;
-
+      
     //validating the fields
     const validatedFields = schema.safeParse({ file });
 
-    console.log(validatedFields);
+    console.log({validatedFields});
 
     if (!validatedFields.success) {
       toast("❌ Something went wrong", {
@@ -87,23 +91,41 @@ export default function UploadForm() {
     console.log('summary', result);
     
     const{data=null,message=null} = result || {}
+
     
     if(data){
+      let storeResult:any;
       toast("Saving the PDF",
         {
           description:"Hang tight , we are saving your summary✨"
         }
       )
       
-      formRef.current?.reset();
       if(data.summary){
-          // save the summary to the database
-          setIsLoading(false)
+        // save the summary to the database
+        storeResult = await storePdfSummaryAction({summary:data.summary,
+          fileUrl:resp[0].serverData.file.url,
+          title: data.title,
+          fileName:file.name
+        })
+        console.log({storeResult})
+        if(storeResult.success){
+          toast("Saved Summary✨",
+            {description:"Generated and the saved the summary successfully"}
+          )
+          
+            formRef.current?.reset();
+            setIsLoading(false)
+            router.push(`/summaries/${storeResult.data.id}`)   
+        }
         }
       }
     } catch (error) {
       console.log("error occured",error)
       formRef.current?.reset();
+      setIsLoading(false)
+    }
+    finally{
       setIsLoading(false)
     }
     // summarize the pdf using AI

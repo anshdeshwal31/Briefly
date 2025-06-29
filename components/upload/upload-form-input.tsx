@@ -23,7 +23,7 @@ const UploadFormInput = ({ onSubmit ,ref,isLoading }:{onSubmit:(e: React.FormEve
             className={cn(isLoading && 'opacity-50 cursor-not-allowed')}
             disabled= {isLoading}
           />
-          <Button className={cn(isLoading&&'opacity-50')}>{isLoading?<div className='flex'>
+          <Button disabled={isLoading} className={cn(isLoading&&'opacity-50')}>{isLoading?<div className='flex'>
                     <Loader2 className='mr-2 h-4 w-4 animate-spin'/>Processing...
                   </div>:'Upload your PDF'}</Button>
         </div>

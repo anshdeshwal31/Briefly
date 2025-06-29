@@ -26,9 +26,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`font-sans ${fontSans.variable} antialiased`}>
+        <body 
+          className={`font-sans ${fontSans.variable} antialiased`}
+          suppressHydrationWarning={true}
+        >
           <div className="relative min-h-screen flex flex-col">
-
             <Header/>
             <main className="flex-1">
               {children}
@@ -40,7 +42,7 @@ export default function RootLayout({
             toastOptions={{
               className:"bg-red-500 rounded-full py-4"      
             }}
-            />
+          />
         </body>
       </html>
     </ClerkProvider>
