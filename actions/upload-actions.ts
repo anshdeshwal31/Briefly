@@ -30,7 +30,7 @@ export async function generatePdfSummary(
   }
 
   // Destructure the first element of the uploadResponse array
-  console.log("uploadResponse inside generatePdfSummary function", uploadResponse)
+  // console.log("uploadResponse inside generatePdfSummary function", uploadResponse)
   
   const {
     serverData: { userId },
@@ -57,7 +57,7 @@ export async function generatePdfSummary(
     // Further processing of pdfText would go here (e.g., summarization, saving to DB)
     // For now, let's just return a success message with the text length
     console.log("line break")
-    console.log({pdfText})
+    // console.log({pdfText})
 
     let summary:any;
     try {
@@ -81,7 +81,7 @@ export async function generatePdfSummary(
 
     if (!summary) {
       console.log("line break")
-      console.log({summary})
+      // console.log({summary})
       return {
         success: false,
         message: 'Failed to generate summary from PDF text. summary is empty',
@@ -89,7 +89,7 @@ export async function generatePdfSummary(
       };
     }
 
-    console.log({summary})
+    // console.log({summary})
     const formattedTitle = formatFileNameAsTitle(fileName)
     return {
       success: true,
@@ -157,9 +157,9 @@ export const storePdfSummaryAction = async ({fileUrl , summary  , title , fileNa
     })
 
 
-    console.log({savedSummary})
+    // console.log({savedSummary})
     if(!savedSummary){
-      console.log({savedSummary})
+      // console.log({savedSummary})
       return {
         success: false,
         message: "failed to save the pdf"

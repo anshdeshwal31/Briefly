@@ -17,7 +17,7 @@ export const getSummaryById = async (id:string) => {
                             pdf_summaries where id = ${id} ORDER BY
                             created_at DESC;`
         console.log("summary inside getSummaryById")
-        console.log({summary})
+        // console.log({summary})
         return summary;
         
     } catch (error) {

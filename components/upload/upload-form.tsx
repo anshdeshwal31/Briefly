@@ -88,7 +88,7 @@ export default function UploadForm() {
     console.log("before calling generatePdfSummary")
     const result = await generatePdfSummary(resp)
     console.log("after calling generatePdfSummary")
-    console.log('summary', result);
+    // console.log('summary', result);
     
     const{data=null,message=null} = result || {}
 
@@ -108,7 +108,7 @@ export default function UploadForm() {
           title: data.title,
           fileName:file.name
         })
-        console.log({storeResult})
+        // console.log({storeResult})
         if(storeResult.success){
           toast("Saved Summary✨",
             {description:"Generated and the saved the summary successfully"}

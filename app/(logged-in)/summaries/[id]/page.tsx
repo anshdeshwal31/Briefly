@@ -14,12 +14,12 @@ export default async function SummaryPage(props: {
 
   const summary = await getSummaryById(id);
     console.log("inside the summary page")
-    console.log({summary})
+    // console.log({summary})
   if (!summary) {
     console.log("summary not found")
     notFound();
   }
-  console.log({summary})
+  // console.log({summary})
   
   const { title, summary_text, file_name, word_count, created_at , original_file_url} = summary;
   const readingTime = Math.ceil((word_count|| 0)/200)
