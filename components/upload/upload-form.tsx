@@ -32,8 +32,8 @@ export default function UploadForm() {
         description: err.message,
       })
     },
-    onUploadBegin: ({ file }) => {
-      console.log('upload has begun for', file );
+    onUploadBegin: (data) => {
+      console.log('upload has begun for', data);
     },
   });
 
@@ -66,8 +66,8 @@ export default function UploadForm() {
     )
     
     //upload the file to uploadthing
-    const resp = await startUpload([file]);
-    if (!resp) {
+    const uploadResponse = await startUpload([file]);
+    if (!uploadResponse) {
         toast("❌ Something went wrong", {
             description:"Please use a different file or try again later."
           })
@@ -84,9 +84,12 @@ export default function UploadForm() {
     
     // TODO:
     // parse the pdf using lang chain
-    console.log('upload response', resp);
+    console.log('upload response', uploadResponse);
     console.log("before calling generatePdfSummary")
-    const result = await generatePdfSummary(resp)
+    const result = await generatePdfSummary({
+      fileUrl:uploadResponse[0].serverData.fileUrl,
+      fileName:file.name}
+    )
     console.log("after calling generatePdfSummary")
     // console.log('summary', result);
     
@@ -104,7 +107,7 @@ export default function UploadForm() {
       if(data.summary){
         // save the summary to the database
         storeResult = await storePdfSummaryAction({summary:data.summary,
-          fileUrl:resp[0].serverData.file.url,
+          fileUrl:uploadResponse[0].serverData.fileUrl,
           title: data.title,
           fileName:file.name
         })

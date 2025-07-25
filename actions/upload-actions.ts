@@ -10,18 +10,9 @@ import { revalidatePath } from 'next/cache';
 
 interface pdfSummaryType{userId?:string ,fileUrl: string,summary :string , title : string , fileName : string}
 
-export async function generatePdfSummary(
-  uploadResponse: {
-    serverData: {
-      userId: string;
-    };
-    userId: string;
-    url: string;
-    name: string;
-  }[]
-) {
+export async function generatePdfSummary({fileUrl,fileName}:{fileUrl:string , fileName : string }) {
   console.log("start of the generatePdfSummary function ")
-  if (!uploadResponse) {
+  if (!fileUrl) {
     return {
       success: false,
       message: 'File upload failed',
@@ -32,19 +23,15 @@ export async function generatePdfSummary(
   // Destructure the first element of the uploadResponse array
   // console.log("uploadResponse inside generatePdfSummary function", uploadResponse)
   
-  const {
-    serverData: { userId },
-    url: pdfUrl, name: fileName ,
-  } = uploadResponse[0];
   
   console.log("line break")
-  console.log("userId", userId)
+  // console.log("userId", userId)
   console.log("line break")
-  console.log({pdfUrl})
+  console.log({fileUrl})
   console.log("line break")
   console.log({fileName})
 
-  if (!pdfUrl) {
+  if (!fileUrl) {
     return {
       success: false,
       message: 'File upload failed',
@@ -53,7 +40,7 @@ export async function generatePdfSummary(
   }
 
   try {
-    const pdfText = await fetchAndExtractPdfText(pdfUrl);
+    const pdfText = await fetchAndExtractPdfText(fileUrl);
     // Further processing of pdfText would go here (e.g., summarization, saving to DB)
     // For now, let's just return a success message with the text length
     console.log("line break")
