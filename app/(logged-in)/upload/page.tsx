@@ -2,6 +2,8 @@ import BgGradient from '@/components/common/bg-gradient';
 import UploadHeader from '@/components/upload/upload-header';
 import UploadForm from '@/components/upload/upload-form';
 
+export const maxDuration = 60;
+
 export default function Page() {
   return (
     <section className="min-h-screen">

@@ -1,5 +1,10 @@
+'use client'
+
 import { FileText , MoveRight , FileOutput  , BrainCircuit} from 'lucide-react';
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
+import { MotionDiv } from '../common/motion-wrapper';
+import { fadeInParent, fadeInUp } from '@/utils/motionConfig';
+import { useInView } from 'motion/react';
 
 type Step = {
  icon: ReactNode;
@@ -26,9 +31,15 @@ const steps: Step[] = [
 ];
 
 export default function HowItWorksSection() {
+
+  const ref = useRef(null);
+  const ref2 = useRef(null);
+  const inView2=useInView(ref2,{once:true})
+  const inView = useInView(ref,{once:true})
+  
  return (
    <section className="relative overflow-hidden bg-gray-50">
-     <div className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 lg:pt-12">
+     <MotionDiv className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 lg:pt-12">
        <div
          aria-hidden="true"
          className="pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl"
@@ -42,7 +53,7 @@ export default function HowItWorksSection() {
          />
        </div>
 
-       <div className="text-center mb-16">
+       <MotionDiv ref={ref2} variants={fadeInUp} initial="hidden" animate={inView2?"show":"hidden"} className="text-center mb-16">
          <h2 className="font-bold text-xl uppercase mb-4 text-rose-500">
            How it works
          </h2>
@@ -50,11 +61,11 @@ export default function HowItWorksSection() {
            Transform any PDF into an easy-to-digest summary in three simple
            steps
          </h3>
-       </div>
+       </MotionDiv>
 
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative">
+       <MotionDiv ref={ref} variants={fadeInParent} initial="hidden" animate={inView?"show":"hidden"} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto relative">
          {steps.map((step, idx) => (
-           <div className="relative flex items-stretch" key={idx}>
+           <MotionDiv variants={fadeInUp} className="relative flex items-stretch" key={idx}>
              <StepItem key={idx} {...step} />
              {idx < steps.length - 1 && (
                <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
@@ -65,10 +76,10 @@ export default function HowItWorksSection() {
                  />
                </div>
              )}
-           </div>
+           </MotionDiv>
          ))}
-       </div>
-     </div>
+       </MotionDiv>
+     </MotionDiv>
    </section>
  );
 }

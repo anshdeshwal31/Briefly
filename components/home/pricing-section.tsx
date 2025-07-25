@@ -1,6 +1,16 @@
+'use client'
+
 import { ArrowRight, CheckIcon } from 'lucide-react'; // Assuming CheckIcon and ArrowRight are imported
-import Link from 'next/link';
 import { cn } from '@/lib/utils'; // Assuming cn is a utility for conditionally joining class names
+import { processPayment } from '@/lib/makePayment';
+import { Button } from '../ui/button';
+import { useUser } from '@clerk/nextjs';
+import { currency } from '@/utils/constants';
+import { useRef } from 'react';
+import { useInView } from 'motion/react';
+import { MotionDiv, MotionSection, MotionSpan } from '../common/motion-wrapper';
+import {  fadeInUp } from '@/utils/motionConfig';
+
 
 type PriceType = {
   name: string;
@@ -11,6 +21,7 @@ type PriceType = {
   paymentLink: string;
   priceId: string;
 };
+
 
 const plans = [
   {
@@ -46,6 +57,7 @@ const PricingCard = ({
   id,
   paymentLink,
 }: PriceType) => {
+  const {user} = useUser();
   return (
     <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-lg hover:scale-105 transition-all duration-300">
       <div
@@ -63,9 +75,9 @@ const PricingCard = ({
         </div>
 
         <div className="flex gap-2">
-          <p className="text-5xl tracking-tight font-extrabold">${price}</p>
+          <p className="text-5xl tracking-tight font-extrabold">{currency}{price}</p>
           <div className="flex flex-col justify-end mb-[4px]">
-            <p className="text-xs uppercase font-semibold">USD</p>
+            <p className="text-xs uppercase font-semibold">RUP</p>
             <p className="text-xs">/month</p>
           </div>
         </div>
@@ -80,8 +92,9 @@ const PricingCard = ({
         </div>
 
         <div className="space-y-2 flex justify-center w-full">
-          <Link
-            href={paymentLink}
+          <Button
+            // href={paymentLink}
+            onClick={(e) => processPayment(e,price,user,id)}
             className={cn(
               'w-full rounded-full flex items-center justify-center',
               'gap-2 bg-linear-to-r from-rose-800 to-rose-500',
@@ -93,7 +106,7 @@ const PricingCard = ({
             )}
           >
             Buy Now <ArrowRight size={18} />
-          </Link>
+          </Button>
         </div>
       </div>
     </div>
@@ -101,6 +114,9 @@ const PricingCard = ({
 };
 
 export default function PricingSection() {
+  const ref = useRef(null)
+  const inView = useInView(ref,{once:true});
+
   return (
     <section className="relative overflow-hidden" id="pricing">
       <div className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 lg:pt-12 pb-12">
@@ -109,11 +125,11 @@ export default function PricingSection() {
             Pricing
           </h2>
         </div>
-        <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
+        <MotionDiv ref={ref} variants={fadeInUp} initial="hidden" animate = {inView?"show":"hidden"} className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
           {plans.map((plan) => (
-            <PricingCard key={plan.id} {...plan} />
+              <PricingCard  key={plan.id} {...plan} />
           ))}
-        </div>
+        </MotionDiv>
       </div>
     </section>
   );

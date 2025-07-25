@@ -5,6 +5,7 @@ import Header from "@/components/common/header";
 import { Footer } from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import Script from "next/script";
 
 const fontSans = FontSans({
   variable: "--font-sans",
@@ -26,6 +27,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+        <Script 
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="afterInteractive"
+        />
+      </head>
         <body 
           className={`font-sans ${fontSans.variable} antialiased`}
           suppressHydrationWarning={true}

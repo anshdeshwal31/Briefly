@@ -2,6 +2,8 @@ import { FileText } from "lucide-react";
 import { Button } from "../ui/button";
 import { ExternalLink } from "lucide-react";
 import { DownloadSummaryButton } from "./downlaod-summary-button";
+import { MotionDiv } from "../common/motion-wrapper";
+import { fadeInUp } from "@/utils/motionConfig";
 
 export function SourceInfo({
   fileName,
@@ -17,7 +19,7 @@ export function SourceInfo({
   createdAt: string;
 }) {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+    <MotionDiv initial={{opacity:0,y:20}} animate={{opacity:1,y:0,transition:{delay:0.8}}} className="flex flex-col lg:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
       <div className="flex items-center justify-center gap-2">
         <FileText className="h-4 w-4 text-rose-400" />
         <span>Source: {fileName}</span>
@@ -45,6 +47,6 @@ export function SourceInfo({
           createdAt={createdAt}
         />
       </div>
-    </div>
+    </MotionDiv>
   );
 }

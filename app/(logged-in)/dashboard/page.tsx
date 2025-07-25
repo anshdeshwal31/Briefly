@@ -7,6 +7,8 @@ import { ArrowRight, Plus } from 'lucide-react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import EmptySummaryState from '@/components/summaries/empty-summary-state';
+import { MotionDiv } from '@/components/common/motion-wrapper';
+import { fadeInParent, fadeInUp } from '@/utils/motionConfig';
 
 export default async function DashboardPage() {
   const uploadLimit = 5;
@@ -22,8 +24,8 @@ export default async function DashboardPage() {
     <main className="min-h-screen">
       <BgGradient className="from-emerald-200 via-teal-200 to-cyan-200" />
       <div className="container mx-auto flex flex-col gap-4">
-        <div className="px-2 py-12 sm:py-24">
-          <div className="flex gap-4 mb-8 justify-between">
+        <MotionDiv variants={fadeInParent} initial="hidden" animate="show"  className="px-2 py-12 sm:py-24">
+          <MotionDiv variants={fadeInUp} className="flex gap-4 mb-8 justify-between">
             <div className="flex flex-col gap-2">
               <h1 className="text-4xl font-bold tracking-tight bg-linear-to-r from-gray-600 to-gray-900 bg-clip-text text-transparent">
                 Your Summaries
@@ -41,16 +43,15 @@ export default async function DashboardPage() {
                 New Summary
               </Link>
             </Button>
-          </div>
+          </MotionDiv>
 
-          <div className="mb-6"></div>
 
-          {summaries.length==0?<EmptySummaryState/>:<div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
+          {summaries.length==0?<EmptySummaryState/>:<MotionDiv variants={fadeInUp} className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
             {summaries.map((summary, index) => (
               <SummaryCard key={index} summary={summary} />
             ))}
-          </div>}
-        </div>
+          </MotionDiv>}
+        </MotionDiv>
       </div>
     </main>
   );
