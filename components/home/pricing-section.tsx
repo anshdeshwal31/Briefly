@@ -10,6 +10,7 @@ import { useRef } from 'react';
 import { useInView } from 'motion/react';
 import { MotionDiv, MotionSection, MotionSpan } from '../common/motion-wrapper';
 import {  fadeInUp } from '@/utils/motionConfig';
+import BgGradient from '../common/bg-gradient';
 
 
 type PriceType = {
@@ -97,7 +98,7 @@ const PricingCard = ({
             onClick={(e) => processPayment(e,price,user,id)}
             className={cn(
               'w-full rounded-full flex items-center justify-center',
-              'gap-2 bg-linear-to-r from-rose-800 to-rose-500',
+              'gap-2 bg-linear-to-r transition-colors duration-500  from-rose-800 to-rose-500',
               'hover:from-rose-500 hover:to-rose-800 text-white',
               'border-2 py-2',
               id === 'pro'

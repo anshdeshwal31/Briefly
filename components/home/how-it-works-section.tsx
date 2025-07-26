@@ -38,9 +38,11 @@ export default function HowItWorksSection() {
   const inView = useInView(ref,{once:true})
   
  return (
-   <section className="relative overflow-hidden bg-gray-50">
+   <section className="relative overflow-hidden">
+      <div className="absolute top-[100px] right-0 h-96   w-[400px] bg-gradient-to-br from-teal-100 via-teal-300 to-teal-400 opacity-30 blur-3xl -z-10"></div>
+      <div className="absolute top-[290px] right-[350px] h-48 w-[400px] bg-gradient-to-br from-teal-100 via-teal-300 to-teal-500 opacity-30 blur-3xl -z-10"></div>
      <MotionDiv className="py-12 lg:py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 lg:pt-12">
-       <div
+       {/* <div
          aria-hidden="true"
          className="pointer-events-none absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl"
        >
@@ -51,7 +53,7 @@ export default function HowItWorksSection() {
                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
            }}
          />
-       </div>
+       </div> */}
 
        <MotionDiv ref={ref2} variants={fadeInUp} initial="hidden" animate={inView2?"show":"hidden"} className="text-center mb-16">
          <h2 className="font-bold text-xl uppercase mb-4 text-rose-500">

@@ -11,7 +11,7 @@ export default function HeroSection() {
         {/* <Sparkles className="absolute inset-0 h-full w-full" /> */}
       </div>
 
-      <MotionH1 variants={fadeInRight} className="font-bold py-6 text-center">
+      <MotionH1 variants={fadeInUp} className="font-bold py-6 text-center">
         Transform PDFs into{' '}
         <span className="relative inline-block">
           <span className="relative z-10 px-2">concise</span>
@@ -23,19 +23,19 @@ export default function HeroSection() {
         summaries
       </MotionH1>
 
-      <MotionH2 variants={fadeInRight} className="text-lg sm:text-xl lg:text-2xl text-center px-4 lg:px-0 lg:max-w-4xl text-gray-600">
+      <MotionH2 variants={fadeInUp} className="text-lg sm:text-xl lg:text-2xl text-center px-4 lg:px-0 lg:max-w-4xl text-gray-600">
         Get a beautiful summary reel of the document in seconds.
       </MotionH2>
 
-      <MotionDiv variants={fadeInRight} className="Button">
+      <MotionDiv variants={fadeInUp} className="Button">
         <Link 
           href="/upload"
           className="text-white mt-6 text-base sm:text-lg lg:text-xl rounded-full px-8 sm:px-10 lg:px-12 py-4 sm:py-5 lg:py-6
           lg:mt-16 bg-linear-to-r from-slate-900 to-rose-500
           hover:from-rose-500 hover:to-slate-900 hover:no-underline
-          font-bold shadow-lg  transition-all duration-500 flex gap-2 items-center"
+          font-bold shadow-lg  transition-colors duration-700 flex gap-2 items-center "
         >
-          <span>Try Sommaire</span>
+          <span>Try Briefly</span>
           <ArrowRight className="animate-pulse" />
         </Link>
       </MotionDiv>

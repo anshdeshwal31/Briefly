@@ -30,7 +30,7 @@ const Header =  async () => {
         <div className="">
             <NavLink href="/" className='flex hover:cursor-pointer items-center '>
                 <FileText className='w-5 h-5 lg:w-8 lg:h-8 text-gray-900 hover:rotate-15 transition duration-500'/>
-                <span className='font-extrabold text-gray-900 lg:text-xl'>Sommaire</span>
+                <span className='font-extrabold text-gray-900 lg:text-xl'>Briefly</span>
             </NavLink>
         </div>
         
@@ -46,7 +46,12 @@ const Header =  async () => {
                 <div className='flex gap-4 pt-2 items-center'>
                     {hasActiveSubscription?<div className='flex gap-3'>
                         <NavLink href="/upload" className=''>Upload a PDF</NavLink>
-                        <div className="">Pro</div>
+                        <div className='p-[2px] bg-gradient-to-r from-amber-400 to-amber-100 rounded-full animate-gradient-x'>
+                            <Badge className='bg-gradient-to-r from-rose-600 to-rose-400 p-1 px-2 rounded-full text-sm text-amber-200'>
+                                <Crown className=''/>
+                                <span className='text-amber-300'>Pro</span>
+                            </Badge>
+                        </div>
                     </div>:<PromptToSubscribe/>}
                     <UserButton/>
                 </div> 

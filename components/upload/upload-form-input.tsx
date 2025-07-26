@@ -30,7 +30,7 @@ const UploadFormInput = ({ onSubmit ,ref,isLoading }:{onSubmit:(e: React.FormEve
                     </div>:'Upload your PDF'}</Button>
           </div>
         </form>
-        {isLoading && <p>Processing</p>}
+        {isLoading && <p>Processing...</p>}
          {isLoading && <LoadingSkeleton/> }   
       </div>
     );

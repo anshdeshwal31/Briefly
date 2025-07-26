@@ -13,7 +13,7 @@ export default function Home() {
         <HeroSection />
       </div>
         <DemoSection />
-        <BgGradient/>
+        {/* <BgGradient className='absolute right-0 top-0'/> */}
         <HowItWorksSection />
         <PricingSection />
         <CTASection />

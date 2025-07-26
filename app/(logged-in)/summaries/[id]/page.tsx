@@ -9,7 +9,7 @@ import { MotionDiv } from '@/components/common/motion-wrapper';
 import { fadeInUp } from '@/utils/motionConfig';
 import { getDbConnection } from '@/lib/db';
 import { auth, currentUser } from '@clerk/nextjs/server';
-import SubscriptionPrompt from '@/components/common/subscription-lock';
+import SummarySkeleton from '@/components/summaries/summary-skeleton';
 
 const hasActiveStatus = async () => {
   const user = await currentUser()
@@ -42,13 +42,13 @@ export default async function SummaryPage(props: {
 
   if(!isActive){
     return (
-      <SubscriptionPrompt/>
+      <SummarySkeleton/>
     )
   }
 
   return (
-    <div className="relative isolate min-h-screen bg-linear-to-b from-rose-50/40 to-white">
-      <BgGradient className="from-rose-400 via-rose-300 to-orange-200" />
+    <div className="relative isolate min-h-screen bg-linear-to-b  ">
+      <BgGradient className="from-teal-400 via-emerald-300 to-teal-200" />
 
       <div className="container mx-auto flex flex-col gap-4">
         <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-24">
@@ -65,6 +65,7 @@ export default async function SummaryPage(props: {
               <div className="absolute top-2 sm:top-4 right-2 sm:right-4 flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-muted-foreground bg-white/90 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-xs">
                 <FileText className="h-3 w-3 sm:h-4 sm:w-4 text-rose-400" />
                 {word_count?.toLocaleString()} words
+              <BgGradient/>
               </div>
 
               <div className="relative mt-8 sm:mt-6 flex justify-center">

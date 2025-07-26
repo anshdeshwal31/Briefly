@@ -51,7 +51,6 @@ export function SummaryHeader({
       <MotionDiv initial={{opacity:0,x:30}} animate={{opacity:1,x:0,transition:{delay:0.6}}} className="self-start">
         <Link href="/dashboard">
           <Button
-            variant="link"
             size="sm"
             className="group flex items-center gap-1 sm:gap-2 hover:bg-white/80 backdrop-blur-xs rounded-full transition-all duration-200 shadow-xs hover:shadow-md border border-rose-100/30 bg-rose-100 px-2 sm:px-3"
           >

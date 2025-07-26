@@ -31,7 +31,7 @@ export function NavigationControls({
               : 'hover:bg-rose-500/20'
           )}
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="h-6 w-6 text-black" />
         </Button>
 
         {/* Section buttons */}
@@ -63,7 +63,7 @@ export function NavigationControls({
               : 'hover:bg-rose-500/20'
           )}
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="h-6 w-6 text-black" />
         </Button>
       </div>
     </div>

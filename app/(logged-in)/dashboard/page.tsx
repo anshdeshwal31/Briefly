@@ -46,11 +46,16 @@ export default async function DashboardPage() {
           </MotionDiv>
 
 
-          {summaries.length==0?<EmptySummaryState/>:<MotionDiv variants={fadeInUp} className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
+          {summaries.length==0?<EmptySummaryState/>:<MotionDiv variants={fadeInUp} className="z-10 relative grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 sm:px-0">
             {summaries.map((summary, index) => (
               <SummaryCard key={index} summary={summary} />
             ))}
           </MotionDiv>}
+      <div>
+          <div className='h-[100px] w-[250px] blur-3xl bg-teal-200/50 top-[200px] right-[50px] absolute'/>
+          <div className='h-[100px] w-[450px] blur-3xl bg-teal-200/50 top-[600px] right-[50px] absolute'/>
+          <div className='h-[100px] w-[650px] blur-3xl bg-teal-200/50 top-[600px] right-[50px] absolute'/>
+      </div>
         </MotionDiv>
       </div>
     </main>
