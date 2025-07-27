@@ -19,10 +19,10 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "Briefly - AI-Powered PDF Summarization",
   description: "Save hours of reading time. Transform lengthy PDFs into clear , accurate summaries in seconds with our advanced AI technologies.",
-  // metadataBase:new URL(ORIGIN_URL),
-  // alternates:{
-  //   canonical:ORIGIN_URL
-  // }
+  metadataBase:new URL(ORIGIN_URL),
+  alternates:{
+    canonical:ORIGIN_URL
+  }
 };
 
 export default function RootLayout({

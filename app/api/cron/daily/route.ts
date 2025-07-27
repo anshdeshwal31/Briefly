@@ -1,10 +1,8 @@
 import { getDbConnection } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
     // Security check
-
     const cronSecret = process.env.CRON_SECRET
 
     if(!cronSecret) throw new Error("couldn't find cron secret")
@@ -17,39 +15,27 @@ export async function POST(request: Request) {
     try {
         const sql = await getDbConnection();
         
-        // Get all subscriptions that need to be expired
-        const expiredSubscriptions = await sql`
-            SELECT id, user_id, status, current_period_end 
-            FROM subscriptions 
-            WHERE current_period_end < NOW() 
-            AND status = 'active'
-        `;
+        // Expire the overdue subscriptions and get count
+        const expiredCount = await sql`
+            UPDATE subscriptions 
+            SET status = 'expired', updated_at = CURRENT_TIMESTAMP 
+            WHERE current_period_end < NOW() AND status = 'active'`;
 
-        console.log(`Found ${expiredSubscriptions.length} subscriptions to expire`);
-
-        // Expire the overdue subscriptions
-        if (expiredSubscriptions.length > 0) {
-            const expiredCount = await sql`
-                UPDATE subscriptions 
-                SET status = 'expired', updated_at = CURRENT_TIMESTAMP 
-                WHERE current_period_end < NOW() AND status = 'active'
-            `;
-
-            // Also update users table
+        // Also update users table if any subscriptions were expired
+        if (expiredCount.length > 0) {
             await sql`
                 UPDATE users 
-                SET subscription_status = 'inactive' 
-                WHERE subscription_id IN (
-                    SELECT id FROM subscriptions WHERE status = 'expired'
-                )
-            `;
-
-            console.log(`Expired ${expiredCount.length} subscriptions`);
+                SET status = 'inactive' 
+                WHERE user_id IN (
+                    SELECT user_id FROM subscriptions WHERE status = 'expired'
+                )`;
         }
+
+        console.log(`Expired ${expiredCount.length} subscriptions`);
 
         return NextResponse.json({ 
             success: true, 
-            message: `Processed ${expiredSubscriptions.length} expired subscriptions`,
+            message: `Processed ${expiredCount.length} expired subscriptions`,
             timestamp: new Date().toISOString()
         });
 
