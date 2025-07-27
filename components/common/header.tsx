@@ -2,7 +2,6 @@
 
 import { Crown, Divide, FileText } from 'lucide-react';
 import { NavLink } from '@/components/common/nav-link';
-import {Button} from '@/components/ui/button';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { getDbConnection } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server';
@@ -22,7 +21,7 @@ const PromptToSubscribe = () => {
 const Header =  async () => {
     const {userId} = await auth();
     const sql = await getDbConnection();
-    const rows = await sql`SELECT status FROM users WHERE user_id=${userId}`
+    const rows = await sql`SELECT status FROM users WHERE user_id=${userId}`;
     const hasActiveSubscription = rows[0]?.status=='active'
     
   return (

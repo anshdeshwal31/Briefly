@@ -34,7 +34,6 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <head>
-          <link rel="icon" href="/B.png" />
         <Script 
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="afterInteractive"

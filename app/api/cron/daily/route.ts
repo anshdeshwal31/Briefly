@@ -1,7 +1,7 @@
 import { getDbConnection } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
     // Security check
     const cronSecret = process.env.CRON_SECRET
 
