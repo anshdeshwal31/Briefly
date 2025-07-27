@@ -8,8 +8,9 @@ import { SummaryViewer } from '@/components/summaries/summary-viewer';
 import { MotionDiv } from '@/components/common/motion-wrapper';
 import { fadeInUp } from '@/utils/motionConfig';
 import { getDbConnection } from '@/lib/db';
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { currentUser } from '@clerk/nextjs/server';
 import SummarySkeleton from '@/components/summaries/summary-skeleton';
+import PromptSubscriptionCard from '@/components/common/prompt-subscription';
 
 const hasActiveStatus = async () => {
   const user = await currentUser()
@@ -42,7 +43,10 @@ export default async function SummaryPage(props: {
 
   if(!isActive){
     return (
-      <SummarySkeleton/>
+      <div className='flex justify-center items-center my-10'>
+
+        <PromptSubscriptionCard/>
+      </div>
     )
   }
 

@@ -1,9 +1,16 @@
 import Razorpay from 'razorpay';
 import { NextRequest, NextResponse } from 'next/server';
 
+const razorpayKeyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
+const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET
+
+if(!razorpayKeyId)throw new Error("couldn't find razorpay key id")
+if(!razorpayKeySecret)throw new Error("couldn't find razorpay key secret")
+    
+
 const razorpay = new Razorpay({
- key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
- key_secret: process.env.RAZORPAY_KEY_SECRET
+ key_id: razorpayKeyId,
+ key_secret: razorpayKeySecret
 });
 
 export async function POST(request: NextRequest) {

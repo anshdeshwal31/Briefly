@@ -49,34 +49,39 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   
   console.log('Checking auth - user:', userId ? 'authenticated' : 'not authenticated');
   
-  // If user is not authenticated and trying to access protected route
-  if (!userId && isProtectedRoute(req)) {
-    const signInUrl = new URL('/sign-in', req.url);
-    return NextResponse.redirect(signInUrl);
-  }
-  
-  // Check subscription for authenticated users on protected routes
-  if (userId && isProtectedRoute(req)) {
-    try {
-      const hasActiveSubscription = await isSubscriptionActive(userId);
-      
-      // if (!hasActiveSubscription) {
-      //   const pricingUrl = new URL('/pricing?expired=true', req.url);
-      //   return NextResponse.redirect(pricingUrl);
-      // }
-      if(req.nextUrl.pathname.startsWith('/api/uploadThing')){
-        const outOfSummaries:boolean|undefined = await checkOutOfSummaries();
-        if(outOfSummaries){
-          NextResponse.json({message:"You're out of summaries.Please renew the subscription"})
-        }
-      }
-    } catch (error) {
-      console.error('Subscription check error:', error);
-      // Fail open - allow request to continue
+  try {
+    
+    // If user is not authenticated and trying to access protected route
+    if (!userId && isProtectedRoute(req)) {
+      const signInUrl = new URL('/sign-in', req.url);
+      return NextResponse.redirect(signInUrl);
+    }
+    
+    // Check subscription for authenticated users on protected routes
+    if (userId && isProtectedRoute(req)) {
+      try {
+        const hasActiveSubscription = await isSubscriptionActive(userId);
+        
+        // if (!hasActiveSubscription) {
+          //   const pricingUrl = new URL('/pricing?expired=true', req.url);
+          //   return NextResponse.redirect(pricingUrl);
+          // }
+          if(req.nextUrl.pathname.startsWith('/api/uploadThing')){
+            const outOfSummaries:boolean|undefined = await checkOutOfSummaries();
+            if(outOfSummaries){
+              NextResponse.json({message:"You're out of summaries.Please renew the subscription"})
+            }
+          }
+        } catch (error) {
+          console.error('Subscription check error:', error);
+          // Fail open - allow request to continue
     }
   }
   
   return NextResponse.next();
+} catch (error) {
+  console.log({error})
+}
 });
 
 export const config = {

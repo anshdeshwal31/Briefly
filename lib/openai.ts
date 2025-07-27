@@ -1,8 +1,11 @@
 import { SUMMARY_SYSTEM_PROMPT } from '@/utils/prompts';
 import OpenAI from 'openai';
 
+const openAIApiKey = process.env.OPENAI_API_KEY
+if(!openAIApiKey) throw new Error("couldn't find the openAI api key")
+
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: openAIApiKey,
 });
 
 export async function generateSummaryFromOpenAI(pdfText: string) {

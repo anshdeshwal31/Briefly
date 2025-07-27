@@ -36,13 +36,16 @@ export const processPayment = async (e: React.MouseEvent<HTMLButtonElement>, amo
   e.preventDefault();
   try {
         
+    const razorpayKeyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+    if(!razorpayKeyId) throw new Error("couldn't find razorpay key id")
+    
   const email = user.emailAddresses[0].emailAddress;
   const name = user.fullName || user.firstName || "User";
     console.log({user})
    const orderId: string = await createOrderId(amount);
    console.log({orderId})
    const options = {
-    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    key: razorpayKeyId,
     amount: amount * 100,
     currency: currencyCode,
     name: 'name',

@@ -1,5 +1,5 @@
 import BgGradient from '@/components/common/bg-gradient'
-import { MotionDiv, MotionH1, MotionP } from '@/components/common/motion-wrapper'
+import { MotionDiv, MotionH1 } from '@/components/common/motion-wrapper'
 import { Skeleton } from '@/components/ui/skeleton'
 import { fadeInUp } from '@/utils/motionConfig'
 
@@ -16,14 +16,14 @@ function HeaderSkeleton() {
           <Skeleton className="h-12 w-64 bg-gradient-to-r from-rose-200/50 to-rose-300/50 rounded-xl" />
         </MotionH1>
 
-        <MotionP
+        <MotionDiv
           variants={fadeInUp}
           initial="hidden"
           animate="show"
           className="text-gray-600 mt-2"
         >
           <Skeleton className="h-6 w-96 bg-rose-100/60 rounded-lg" />
-        </MotionP>
+        </MotionDiv>
       </div>
 
       <MotionDiv

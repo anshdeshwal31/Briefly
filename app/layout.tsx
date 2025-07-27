@@ -19,10 +19,10 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "Briefly - AI-Powered PDF Summarization",
   description: "Save hours of reading time. Transform lengthy PDFs into clear , accurate summaries in seconds with our advanced AI technologies.",
-  metadataBase:new URL(ORIGIN_URL),
-  alternates:{
-    canonical:ORIGIN_URL
-  }
+  // metadataBase:new URL(ORIGIN_URL),
+  // alternates:{
+  //   canonical:ORIGIN_URL
+  // }
 };
 
 export default function RootLayout({
@@ -34,6 +34,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <head>
+          <link rel="icon" href="/B.png" />
         <Script 
           src="https://checkout.razorpay.com/v1/checkout.js"
           strategy="afterInteractive"
