@@ -1,4 +1,4 @@
-import { currency, currencyCode } from "@/utils/constants";
+import {  currencyCode } from "@/utils/constants";
 
 // Add Razorpay types
 declare global {
@@ -35,7 +35,7 @@ const createOrderId = async (amount: number) => {
 export const processPayment = async (e: React.MouseEvent<HTMLButtonElement>, amount:number,user:any,plan_type:string) => {
   e.preventDefault();
   try {
-        
+    
     const razorpayKeyId = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     if(!razorpayKeyId) throw new Error("couldn't find razorpay key id")
     

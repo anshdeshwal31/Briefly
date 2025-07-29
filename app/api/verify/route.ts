@@ -21,19 +21,20 @@ const generatedSignature = (
 
 
 export async function POST(request: NextRequest) {
-    // console.log("inside the POST route function of verifying the order")
+    console.log("inside the POST route function of verifying the order")
     try {
 
         const { orderCreationId, razorpayPaymentId, razorpaySignature,plan_type } = await request.json();
         
         const signature = generatedSignature(orderCreationId, razorpayPaymentId);
     if (signature !== razorpaySignature) {
+        console.log("payment verification failed because the signature was not correcpayment verification failed because the signature was not correc")
         return NextResponse.json(
-            { message: 'payment verification failed', isOk: false },
-            { status: 400 }
+            { message: 'payment verification failed because the signature was not correct', isOk: false }
         );
     }
-    await createSubscription(plan_type)
+    await createSubscription(plan_type,razorpayPaymentId)
+    console.log("payement verified successfully")
     return NextResponse.json(
         { message: 'payment verified successfully', isOk: true },
         { status: 200 }

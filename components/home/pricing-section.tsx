@@ -11,6 +11,7 @@ import { useInView } from 'motion/react';
 import { MotionDiv, MotionSection, MotionSpan } from '../common/motion-wrapper';
 import {  fadeInUp } from '@/utils/motionConfig';
 import BgGradient from '../common/bg-gradient';
+import { useRouter } from 'next/navigation';
 
 
 type PriceType = {
@@ -18,7 +19,7 @@ type PriceType = {
   price: number;
   description: string;
   items: string[];
-  id: string;
+  plan_type: string;
   paymentLink: string;
   priceId: string;
 };
@@ -26,9 +27,9 @@ type PriceType = {
 
 const plans = [
   {
-    id: 'basic',
+    plan_type: 'basic',
     name: 'Basic',
-    price: 9,
+    price: 1,
     description: 'For individuals getting started',
     items: ['5 PDF summaries per month', 'Email support'],
     paymentLink: '', // Placeholder, fill with actual link
@@ -44,7 +45,7 @@ const plans = [
       '24/7 priority support',
       'Markdown Export',
     ],
-    id: 'pro',
+    plan_type: 'pro',
     paymentLink: '', // Placeholder, fill with actual link
     priceId: '', // Placeholder, fill with actual price ID
   },
@@ -55,17 +56,33 @@ const PricingCard = ({
   price,
   description,
   items,
-  id,
+  plan_type,
   paymentLink,
 }: PriceType) => {
-  const {user} = useUser();
+  const router = useRouter();
+  const {isSignedIn,user}= useUser();
+
+    const buyPlanFunction = async(e:React.MouseEvent<HTMLButtonElement>,price:number,plan_type:string) => { 
+    
+    
+    if(!isSignedIn){
+      router.push("sign-in")
+      
+    }
+    else{
+      await processPayment(e,price,user,plan_type)
+      router.refresh();
+    }
+    }
+    
+  
   return (
     <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-lg hover:scale-105 transition-all duration-300">
       <div
         className={cn(
           'relative flex flex-col h-full gap-4 lg:gap-8 z-10 px-7 py-8',
           'border-rose-600/20 rounded-2xl border-[1px]',
-          id === 'pro' && 'border-rose-500 gap-5 border-2'
+          plan_type === 'pro' && 'border-rose-500 gap-5 border-2'
         )}
       >
         <div className="flex justify-between items-center gap-4">
@@ -95,13 +112,14 @@ const PricingCard = ({
         <div className="space-y-2 flex justify-center w-full">
           <Button
             // href={paymentLink}
-            onClick={(e) => processPayment(e,price,user,id)}
+            onClick={(e) => buyPlanFunction(e,price,plan_type)
+            }
             className={cn(
               'w-full rounded-full flex items-center justify-center',
               'gap-2 bg-linear-to-r transition-colors duration-500  from-rose-800 to-rose-500',
               'hover:from-rose-500 hover:to-rose-800 text-white',
               'border-2 py-2',
-              id === 'pro'
+              plan_type === 'pro'
                 ? 'border-rose-900'
                 : 'border-rose-100 from-rose-400 to-rose-500'
             )}
@@ -128,7 +146,7 @@ export default function PricingSection() {
         </div>
         <MotionDiv ref={ref} variants={fadeInUp} initial="hidden" animate = {inView?"show":"hidden"} className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch gap-8">
           {plans.map((plan) => (
-              <PricingCard  key={plan.id} {...plan} />
+              <PricingCard  key={plan.plan_type} {...plan} />
           ))}
         </MotionDiv>
       </div>

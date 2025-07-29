@@ -5,7 +5,7 @@ export interface Subscription {
   id: string;
   user_id: string;
   user_email: string;
-  plan_id: string;
+  plan_type: string;
   status: 'active' | 'expired' | 'cancelled' | 'paused';
   current_period_start: Date;
   current_period_end: Date;
@@ -64,8 +64,8 @@ export async function expireSubscription(userId: string) {
     
     await sql`
       UPDATE users 
-      SET subscription_status = 'inactive' 
-      WHERE id = ${userId}
+      SET status = 'inactive' 
+      WHERE user_id = ${userId}
     `;
     
     console.log(`Expired subscription for user: ${userId}`);
@@ -76,7 +76,8 @@ export async function expireSubscription(userId: string) {
 }
 
 export async function createSubscription(
-  plan_type: string
+  plan_type: string,
+  razorpay_payment_id : string
 ) {
   try {
     const sql = await getDbConnection();
@@ -90,16 +91,16 @@ export async function createSubscription(
     
     const result = await sql`
       INSERT INTO subscriptions 
-      (user_id, user_email, plan_id, status, current_period_start, current_period_end)
-      VALUES (${userId}, ${userEmail}, ${plan_type}, 'active', ${now}, ${periodEnd})
+      (user_id, user_email, plan_type, status, current_period_start, current_period_end, razorpay_payment_id)
+      VALUES (${userId}, ${userEmail}, ${plan_type}, 'active', ${now}, ${periodEnd}, ${razorpay_payment_id})
       RETURNING *
     `;
 
     // Update user's subscription status
     await sql`
       UPDATE users 
-      SET subscription_id = ${result[0].id}, subscription_status = 'active' 
-      WHERE id = ${userId}
+      SET status = 'active' 
+      WHERE user_id = ${userId}
     `;
 
     return result[0];

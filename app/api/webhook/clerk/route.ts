@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
   if (eventType === 'user.created') {
     try {
       const sql = await getDbConnection();
-      
+      console.log("connected to db successfully for webhook api")
       // Insert user with Clerk's user ID
       await sql`
         INSERT INTO users (
@@ -51,15 +51,15 @@ export async function POST(req: NextRequest) {
           user_id
         ) VALUES (
             ${email_addresses[0].email_address}, 
-            ${full_name}
-            ${id}, 
+            ${full_name},
+            ${id}
         )
       `;
       
       console.log(`User ${id} added to database`);
     } catch (error) {
       console.error('Error adding user to database:', error);
-      return new NextResponse('Error adding user', { status: 500 });
+      return NextResponse.json({"message":'Error adding user',error}, { status: 500 });
     }
   }
 
