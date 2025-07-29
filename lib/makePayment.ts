@@ -71,7 +71,7 @@ export const processPayment = async (e: React.MouseEvent<HTMLButtonElement>, amo
      console.log({result})
      const res = await result.json();
     //  if (res.isOk) alert("payment succeed");
-     else {
+     if(!res.isOk) {
       alert(res.message);
      }
     },
